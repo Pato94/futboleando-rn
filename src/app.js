@@ -7,7 +7,7 @@ import { LoginScreen, MatchsList } from './containers'
 
 export const AppNavigator = StackNavigator({
   Login: { screen: LoginScreen },
-  Main: { screen: MatchsList }
+  Home: { screen: MatchsList }
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (

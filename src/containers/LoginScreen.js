@@ -1,10 +1,18 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { StyleSheet, Button, View } from 'react-native'
 
-export default class LoginScreen extends React.Component {
+const mapDispatchToProps = (dispatch) => ({
+  onLoginClicked: () => dispatch({ type: 'LOGIN_CLICK' })
+})
+
+class LoginScreen extends React.Component {
   render() {
-    return <View style={styles.container}>
-      <Button title='Login'>Login</Button>
+    const { onLoginClicked } = this.props
+    const { navigate } = this.props.navigation
+    // console.log(onLoginClicked)
+    return <View style={ styles.container }>
+      <Button title='Login' onPress={ () => navigate('Home') } >Login</Button>
     </View>
   }
 }
@@ -20,3 +28,5 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }
 })
+
+export default connect(() => ({}), mapDispatchToProps)(LoginScreen)
