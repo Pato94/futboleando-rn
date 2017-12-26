@@ -1,13 +1,7 @@
 import React from 'react'
 import store from './src/store'
 import { Provider } from 'react-redux'
-import { MatchsList } from './src/containers'
-
-class App extends React.Component {
-  render() {
-    return <MatchsList />
-  }
-}
+import { default as App } from './src/app'
 
 const AppWithStore = () => (
   <Provider store={store}>
