@@ -1,9 +1,9 @@
-import { Splash, Login, MatchsList, MatchForm } from '../containers'
+import { Splash, Login, MatchesList, MatchForm } from '../containers'
 import { StackNavigator, NavigationActions } from 'react-navigation'
 
 const LoggedInStack = StackNavigator({
   MainScreen: {
-    screen: MatchsList
+    screen: MatchesList
   },
   MatchForm: {
     screen: MatchForm
