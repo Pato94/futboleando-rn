@@ -5,10 +5,6 @@ import { navigateAndCleanStack } from '../utils'
 
 export default class Login extends React.Component {
   render() {
-    const signInWithFacebook = () => {
-      console.log("sign in with facebook!")
-    }
-
     const signInWithGoogle = () => {
       this.props.navigation.dispatch(navigateAndCleanStack('Main'))
     }
@@ -18,18 +14,11 @@ export default class Login extends React.Component {
         style={styles.logo}
         source={require('../assets/images/logo.png')}
       />
-      <View>
-        <Button
-          title="Sign in with Facebook"
-          color="#3b5998"
-          onPress={signInWithFacebook}
-        />
-        <Button
-          title="Sign in with Google"
-          color="#ce2828"
-          onPress={signInWithGoogle}
-        />
-      </View>
+      <Button
+        title="Sign in with Google"
+        color="#ce2828"
+        onPress={signInWithGoogle}
+      />
     </View>
   }
 }
@@ -44,7 +33,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 220,
-    height: 300, 
+    height: 300,
     alignSelf: 'center'
   }
 })
