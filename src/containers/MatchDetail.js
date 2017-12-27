@@ -13,13 +13,13 @@ export default class MatchDetail extends React.Component {
       <View style={styles.info}>
         <View style={styles.date}>
           <Image
-            style={styles.smallImage}
+            style={styles.calendarImage}
             source={require("../assets/images/calendar.png")} />
           <Text style={styles.whiteText}>5 de octubre</Text>
           <View style={styles.separator} />
           <Image
-            style={styles.smallImage}
-            source={require("../assets/images/calendar.png")} />
+            style={styles.clockImage}
+            source={require("../assets/images/time_futboleando.png")} />
           <Text style={styles.whiteText}>20:00</Text>
         </View>
         <View style={styles.location}>
@@ -88,8 +88,12 @@ const styles = StyleSheet.create({
     height: 150,
     alignSelf: 'center'
   },
-  smallImage: {
+  calendarImage: {
     width: 18,
+    height: 20
+  },
+  clockImage: {
+    width: 20,
     height: 20
   },
   separator: {
