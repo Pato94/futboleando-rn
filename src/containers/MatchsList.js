@@ -1,8 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { StyleSheet, View, Text, Button } from 'react-native'
 
-export default class MatchsList extends React.Component {
+class MatchsList extends React.Component {
   render() {
+    console.log(this.props)
+
     const createMatch = () => {
       this.props.navigation.navigate('MatchForm')
     }
@@ -15,6 +18,7 @@ export default class MatchsList extends React.Component {
     </View>
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -22,3 +26,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }
 })
+
+const mapStateToProps = (state) => ({ userDetails: state.matches.userDetails })
+const mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(MatchsList)

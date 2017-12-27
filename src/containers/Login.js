@@ -1,11 +1,27 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { StyleSheet, Image, Button, View } from 'react-native'
 import { navigateAndCleanStack } from '../utils'
+import Expo from 'expo'
 
-export default class Login extends React.Component {
+class Login extends React.Component {
   render() {
-    const signInWithGoogle = () => {
-      this.props.navigation.dispatch(navigateAndCleanStack('Main'))
+    const signInWithGoogle = async () => {
+      const result = await Expo.Google.logInAsync({
+        androidClientId: "457965053885-n39fmm519fvv4v1nsa1f6no9e56ru4i4.apps.googleusercontent.com",
+        iosClientId: "457965053885-lt8qi94i8hjgttfsq3t9308g9pjirk9r.apps.googleusercontent.com",
+        scopes: ['email']
+      });
+
+      if (result.type === 'success') {
+        console.log("Login succeeded")
+
+        this.props.receiveUserDetails(result)
+        this.props.navigation.dispatch(navigateAndCleanStack('Main'))
+      } else {
+        // show error
+        return {cancelled: true};
+      }
     }
 
     return <View style={styles.container}>
@@ -21,6 +37,7 @@ export default class Login extends React.Component {
     </View>
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -36,3 +53,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   }
 })
+
+const mapStateToProps = (state) => ({})
+const mapDispatchToProps = (dispatch) => ({
+  receiveUserDetails: (userDetails) => dispatch({ type: 'RECEIVE_USER_DETAILS', payload: userDetails })
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
