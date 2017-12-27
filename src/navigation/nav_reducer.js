@@ -1,8 +1,13 @@
-import { Splash, Login, MatchsList } from '../containers'
+import { Splash, Login, MatchsList, MatchForm } from '../containers'
 import { StackNavigator, NavigationActions } from 'react-navigation'
 
 const LoggedInStack = StackNavigator({
-  MainScreen: { screen: MatchsList }
+  MainScreen: {
+    screen: MatchsList
+  },
+  MatchForm: {
+    screen: MatchForm
+  }
 }, {
   headerMode: 'none'
 })
@@ -24,7 +29,7 @@ export const NavigationStack = StackNavigator({
 const INITIAL_STATE = NavigationStack.router.getStateForAction(NavigationActions.init())
 
 // this is pretty much a standard reducer, but it looks fancy
-// all it cares about is "did the navigation stack change?"    
+// all it cares about is "did the navigation stack change?"
 // if yes => update the stack
 // if no => pass current stack through
 export default (state = INITIAL_STATE, action) => {
