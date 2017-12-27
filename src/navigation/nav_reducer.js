@@ -1,5 +1,6 @@
 import { Splash, Login, MatchsList, MatchDetail } from '../containers'
 import { StackNavigator, NavigationActions } from 'react-navigation'
+import { Constants } from 'expo'
 
 const MainStack = StackNavigator({
   Main: {
@@ -9,7 +10,10 @@ const MainStack = StackNavigator({
     screen: MatchDetail
   }
 }, {
-  initialRouteName: 'Main'
+    initialRouteName: 'Main',
+    navigationOptions: {
+      headerStyle: { marginTop: Constants.statusBarHeight }
+    }
 })
 
 export const NavigationStack = StackNavigator({
