@@ -14,7 +14,11 @@ class App extends Component {
         BackHandler.addEventListener('hardwareBackPress', () => {
           const {nav, dispatch} = this.props;
 
-          if (nav && nav.routes && nav.routes.length > 1) {
+          let currentRoutes = nav.routes
+          while (currentRoutes[0].routes) {
+            currentRoutes = currentRoutes[0].routes
+          }
+          if (currentRoutes.length > 1) {
             dispatch(NavigationActions.back());
             return true;
           }
