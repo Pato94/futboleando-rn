@@ -2,8 +2,12 @@ import { Splash, Login, MatchsList, MatchForm } from '../containers'
 import { StackNavigator, NavigationActions } from 'react-navigation'
 
 const LoggedInStack = StackNavigator({
-  MainScreen: { screen: MatchsList },
-  MatchForm: { screen: MatchForm }
+  MainScreen: {
+    screen: MatchsList
+  },
+  MatchForm: {
+    screen: MatchForm
+  }
 }, {
   headerMode: 'none'
 })

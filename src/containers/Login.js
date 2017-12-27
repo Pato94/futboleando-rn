@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, Image, Button, View } from 'react-native'
-import { NavigationActions } from 'react-navigation'
 import { navigateAndCleanStack } from '../utils'
 
 export default class Login extends React.Component {
