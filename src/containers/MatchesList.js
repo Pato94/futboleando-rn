@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, Text, View, FlatList, Button } from 'react-native'
 import { MatchCard } from '../components'
-import { connect } from 'react-redux'
 
 class MatchesList extends React.Component {
   render() {
