@@ -5,7 +5,7 @@ import { MatchsList, Login } from './src/containers'
 
 class App extends React.Component {
   render() {
-    return <Login />
+    return <MatchsList />
   }
 }
 
