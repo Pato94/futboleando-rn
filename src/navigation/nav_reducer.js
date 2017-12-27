@@ -1,11 +1,5 @@
-import { Splash, Login, MatchsList } from '../containers'
+import { Splash, Login, MatchsList, MatchDetail } from '../containers'
 import { StackNavigator, NavigationActions } from 'react-navigation'
-
-const LoggedInStack = StackNavigator({
-  MainScreen: { screen: MatchsList }
-}, {
-  headerMode: 'none'
-})
 
 export const NavigationStack = StackNavigator({
   Splash: {
@@ -15,7 +9,10 @@ export const NavigationStack = StackNavigator({
     screen: Login
   },
   Main: {
-    screen: LoggedInStack
+    screen: MatchsList
+  },
+  Detail: {
+    screen: MatchDetail
   }
 }, {
   headerMode: 'none'

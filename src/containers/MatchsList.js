@@ -1,10 +1,11 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, Button, View } from 'react-native'
 
 export default class MatchsList extends React.Component {
   render() {
     return <View style={styles.container}>
       <Text>jnfkads</Text>
+      <Button title="gotodetail" onPress={ () => this.props.navigation.navigate('Detail') }/>
     </View>
   }
 }
