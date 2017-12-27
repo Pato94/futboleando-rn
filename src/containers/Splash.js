@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 import { connect } from 'react-redux'
+import { navigateAndCleanStack } from '../utils'
 
 class Splash extends Component {
   componentWillMount() {
@@ -42,7 +43,7 @@ const mapStateToProps = () => ({})
 
 const mapDispatchToProps = (dispatch) => ({
   initApp: (navigation) => {
-    navigation.navigate('Login')
+    dispatch(navigateAndCleanStack('Login'))
   }
 })
 

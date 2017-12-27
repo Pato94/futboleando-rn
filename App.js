@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 // this will be used to make your Android hardware Back Button work
 import { Platform, BackHandler } from 'react-native'
 import { Provider, connect } from 'react-redux'
-import { addNavigationHelpers } from 'react-navigation'
+import { addNavigationHelpers, NavigationActions } from 'react-navigation'
 // this is your root-most navigation stack that can nest
 // as many stacks as you want inside it
 import { NavigationStack } from './src/navigation/nav_reducer'
@@ -12,9 +12,13 @@ class App extends Component {
     componentWillMount() {
         if (Platform.OS !== 'android') return
         BackHandler.addEventListener('hardwareBackPress', () => {
-            const { dispatch } = this.props
-            dispatch({ type: 'Navigation/BACK' })
-            return true
+          const {nav, dispatch} = this.props;
+
+          if (nav && nav.routes && nav.routes.length > 1) {
+            dispatch(NavigationActions.back());
+            return true;
+          }
+          return false;
         })
     }
 

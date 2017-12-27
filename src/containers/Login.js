@@ -1,5 +1,7 @@
 import React from 'react'
 import { StyleSheet, Image, Button, View } from 'react-native'
+import { NavigationActions } from 'react-navigation'
+import { navigateAndCleanStack } from '../utils'
 
 export default class Login extends React.Component {
   render() {
@@ -8,7 +10,7 @@ export default class Login extends React.Component {
     }
 
     const signInWithGoogle = () => {
-      this.props.navigation.navigate('WeLoggedIn')
+      this.props.navigation.dispatch(navigateAndCleanStack('Main'))
     }
 
     return <View style={styles.container}>
