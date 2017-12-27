@@ -8,7 +8,7 @@ export default class Login extends React.Component {
     }
 
     const signInWithGoogle = () => {
-      console.log("sign in with google!")
+      this.props.navigation.navigate('WeLoggedIn')
     }
 
     return <View style={styles.container}>
