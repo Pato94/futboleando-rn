@@ -1,5 +1,6 @@
-import { Splash, Login, MatchesList, MatchForm } from '../containers'
+import { Splash, Login, MatchesList, MatchForm, MatchDetail } from '../containers'
 import { StackNavigator, NavigationActions } from 'react-navigation'
+import { Constants } from 'expo'
 
 const LoggedInStack = StackNavigator({
   MainScreen: {
@@ -7,9 +8,15 @@ const LoggedInStack = StackNavigator({
   },
   MatchForm: {
     screen: MatchForm
+  },
+  Detail: {
+    screen: MatchDetail
   }
 }, {
-  headerMode: 'none'
+    initialRouteName: 'MainScreen',
+    navigationOptions: {
+      headerStyle: { marginTop: Constants.statusBarHeight }
+    }
 })
 
 export const NavigationStack = StackNavigator({

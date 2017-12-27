@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, Text, View, FlatList, Button } from 'react-native'
 import { MatchCard } from '../components'
+import { connect } from 'react-redux'
 
 class MatchesList extends React.Component {
   render() {
@@ -35,7 +36,8 @@ class MatchesList extends React.Component {
     return <MatchCard
       date={date}
       locationName={locationName}
-      address={address} />
+      address={address}
+      onClick={ () => this.props.openMatch(this.props.navigation, item) } />
   }
 }
 
@@ -47,6 +49,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({ userDetails: state.matches.userDetails })
-const mapDispatchToProps = (dispatch) => ({})
+const mapDispatchToProps = (dispatch) => ({
+  openMatch: (navigation, match) => navigation.navigate('Detail')
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(MatchsList)
+export default connect(mapStateToProps, mapDispatchToProps)(MatchesList)
