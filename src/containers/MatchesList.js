@@ -1,9 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, Text, View, FlatList, Button } from 'react-native'
+import { StyleSheet, Text, View, FlatList } from 'react-native'
+import ActionButton from 'react-native-action-button'
 import { MatchCard } from '../components'
 
 class MatchesList extends React.Component {
+  static navigationOptions = {
+    title: 'Futboleando'
+  }
+
   render() {
     console.log(this.props)
 
@@ -15,16 +20,12 @@ class MatchesList extends React.Component {
 
     const matches = new Array(3).fill(match)
 
-    const createMatch = () => {
-      this.props.navigation.navigate('MatchForm')
-    }
-
     return <View style={styles.container}>
-      <Button
-        title="Crear partido"
-        onPress={createMatch}
-      />
       <FlatList data={matches} renderItem={this.renderMatch} keyExtractor={this.keyExtractor} />
+      <ActionButton
+        buttonColor="rgb(231,76,60)"
+        onPress={ () => this.props.navigation.navigate('MatchForm') }
+      />
     </View>
   }
 

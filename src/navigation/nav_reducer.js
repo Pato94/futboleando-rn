@@ -15,7 +15,11 @@ const LoggedInStack = StackNavigator({
 }, {
     initialRouteName: 'MainScreen',
     navigationOptions: {
-      headerStyle: { marginTop: Constants.statusBarHeight }
+      headerStyle: {
+        marginTop: Constants.statusBarHeight,
+        backgroundColor: '#50ad4c'
+      },
+      headerTintColor: 'white'
     }
 })
 
