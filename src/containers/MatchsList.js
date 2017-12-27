@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import { StyleSheet, View, Text, Button } from 'react-native'
 
 class MatchsList extends React.Component {
-  render() {
-    console.log(this.props)
 
     const createMatch = () => {
       this.props.navigation.navigate('MatchForm')
