@@ -3,9 +3,10 @@ import { ActivityIndicator, StyleSheet, View, TextInput, Text, Button } from 're
 import DatePicker from 'react-native-datepicker'
 import { NavigationActions } from 'react-navigation'
 import axios from 'axios'
+import { connect } from 'react-redux'
 
 // Date Picker: https://github.com/xgfe/react-native-datepicker
-export default class MatchForm extends React.Component {
+class MatchForm extends React.Component {
   static navigationOptions = {
     title: 'Nuevo Partido'
   }
@@ -19,6 +20,8 @@ export default class MatchForm extends React.Component {
 
   render() {
     const createMatch = () => {
+      this.setState({ loading: true })
+
       const configGraphQL = {
         url: 'http://redo-fulbo.herokuapp.com/match',
         method: 'post',
@@ -27,13 +30,10 @@ export default class MatchForm extends React.Component {
           place: this.state.place
         }
       }
-      this.setState({ loading: true })
 
-      axios(
-        configGraphQL
-      ).then(response =>
-        this.props.navigation.dispatch(NavigationActions.back())
-      ).catch(err => 
+      axios(configGraphQL).then(response =>
+        this.props.matchCreated()
+      ).catch(err =>
         this.setState({ loading: false, error: err })
       )
     }
@@ -86,6 +86,7 @@ export default class MatchForm extends React.Component {
     </View>
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -95,3 +96,10 @@ const styles = StyleSheet.create({
     padding: 30
   }
 })
+
+export default connect(() => ({}), (dispatch) => ({
+  matchCreated: () => {
+    dispatch({ type: 'MATCH_CREATED' })
+    dispatch(NavigationActions.back())
+  }
+}))(MatchForm)

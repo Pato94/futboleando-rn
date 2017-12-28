@@ -24,15 +24,15 @@ const LoggedInStack = StackNavigator({
 })
 
 export const NavigationStack = StackNavigator({
+  Main: {
+    screen: LoggedInStack
+  },
   Splash: {
     screen: Splash
   },
   Login: {
     screen: Login
   },
-  Main: {
-    screen: LoggedInStack
-  }
 }, {
   headerMode: 'none'
 })
