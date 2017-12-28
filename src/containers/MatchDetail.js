@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Image, Text, Button, View } from 'react-native'
+import { StyleSheet, Image, Text, Button, View, FlatList } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { navigateAndCleanStack } from '../utils'
 import { connect } from 'react-redux'
@@ -28,6 +28,7 @@ class MatchDetail extends React.Component {
       )
     }
 
+    const players = match.players
     const matchDate = "12 de enero" // match.date
     const locationText = `${match.place}, "El Salvador 1430"`
     // const locationText = `${match.locationName}, ${match.address}`
@@ -70,8 +71,28 @@ class MatchDetail extends React.Component {
         />
         {callToAction}
       </View>
+      <FlatList
+        data={players}
+        renderItem={this.renderPlayer}
+        keyExtractor={this.keyExtractor}
+        horizontal={true}
+        ItemSeparatorComponent={this.space}
+      />
     </View>
   }
+
+  renderPlayer({ item }) {
+    return <Image
+      style={styles.player}
+      source={{uri: item.avatar_url}}
+    />
+  }
+
+  space() {
+    return(<View style={{width: 5}}/>)
+  }
+
+  keyExtractor = (item, index) => index
 }
 const styles = StyleSheet.create({
   container: {
@@ -97,7 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#387935',
     width: '100%',
     padding: 10,
-    marginTop: 20,
+    marginTop: 30,
     borderRadius: 3
   },
   whiteText: {
@@ -120,7 +141,8 @@ const styles = StyleSheet.create({
   logo: {
     width: 150,
     height: 150,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginTop: 30
   },
   calendarImage: {
     width: 18,
@@ -138,6 +160,11 @@ const styles = StyleSheet.create({
     borderRadius: 1,
     marginLeft: 4,
     marginRight: 10
+  },
+  player: {
+    width: 50,
+    height: 50,
+    borderRadius: 25
   }
 })
 
