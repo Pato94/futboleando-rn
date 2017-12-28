@@ -27,6 +27,23 @@ export const Body = (props) => (
         source={require("../../assets/images/location_black.png")} />
       <Text>{props.locationName}</Text>
     </View>
+    <View style={{
+      width: '90%',
+      backgroundColor: '#a4a4a4',
+      height: 2,
+      borderRadius: 1,
+      alignSelf: 'center'
+    }} />
+    <Text style={{
+      alignSelf: 'flex-end',
+      marginTop: 10,
+      marginBottom: 15,
+      marginRight: 30,
+      fontSize: 18,
+      color: '#4cae46'
+    }}>
+      {props.subscribed ? "YA ESTÁS ANOTADO" : "SUMARME"}
+    </Text>
   </View>
 )
 

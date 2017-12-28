@@ -14,11 +14,11 @@ export default class MatchCard extends React.Component {
   }
 
   render() {
-    const { date, locationName, players, address, onClick } = this.props
+    const { date, locationName, players, address, subscribed, onClick } = this.props
 
     return <TouchableOpacity style={styles.card} onPress={ onClick }>
       <Header people={players} date={date} />
-      <Body locationName={locationName} date={date}/>
+      <Body locationName={locationName} date={date} subscribed={subscribed}/>
     </TouchableOpacity>
   }
 }

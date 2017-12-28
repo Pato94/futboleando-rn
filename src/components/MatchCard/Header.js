@@ -23,7 +23,7 @@ export const Header = ({ people = [], date }) => {
       return `${leadingZeros(hours)}:${leadingZeros(minutes)}`
     } else {
       const days = Math.floor(diff / (24 * hourInMillis))
-      return `${days} días`
+      return days === 1 ? `1 DÍA` : `${days} DÍAS`
     }
   })()
 
