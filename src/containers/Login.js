@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { StyleSheet, Image, Button, View } from 'react-native'
 import { navigateAndCleanStack } from '../utils'
 import Expo from 'expo'
+import axios from 'axios'
 
 class Login extends React.Component {
   render() {
