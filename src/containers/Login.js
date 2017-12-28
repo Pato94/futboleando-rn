@@ -23,7 +23,7 @@ class Login extends React.Component {
           url: 'http://redo-fulbo.herokuapp.com/player',
           method: 'post',
           headers: {
-            Authorization: `Bearer-${result.accessToken}`
+            Authorization: result.accessToken
           },
           data: result
         })

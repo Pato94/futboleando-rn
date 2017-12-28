@@ -2,18 +2,49 @@ import React from 'react'
 import { StyleSheet, Image, Text, Button, View } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { navigateAndCleanStack } from '../utils'
+import { connect } from 'react-redux'
+import axios from 'axios'
 
-export default class MatchDetail extends React.Component {
+class MatchDetail extends React.Component {
   static navigationOptions = {
     title: 'Próximo Partido'
   }
 
   render() {
-    const match = this.props.navigation.state.params
+    const match = this.props.navigation.state.params.match
+    const user = this.props.navigation.state.params.user
+
+    const joinMatch = () => {
+      axios({
+        url: `http://redo-fulbo.herokuapp.com/match/${match.id}/subscription`,
+        method: 'post',
+        headers: {
+          Authorization: user.accessToken
+        }
+      }).then(response =>
+        this.props.matchJoined()
+      ).catch(err =>
+        this.setState({ loading: false, error: err })
+      )
+    }
 
     const matchDate = "12 de enero" // match.date
     const locationText = `${match.place}, "El Salvador 1430"`
     // const locationText = `${match.locationName}, ${match.address}`
+
+    let callToAction
+    if (!match.subscribed) {
+      callToAction = <View>
+        <Text style={styles.message}>¿Te la bancás?</Text>
+        <Button
+          title="Anotarme"
+            onPress={() => joinMatch()} />
+      </View>
+    } else {
+      callToAction = <View>
+        <Text style={styles.message}>¡Ya estás anotado!</Text>
+      </View>
+    }
 
     return <View style={styles.container}>
       <View style={styles.info}>
@@ -37,10 +68,7 @@ export default class MatchDetail extends React.Component {
           style={styles.logo}
           source={require("../assets/images/pelota_futbol.png")}
         />
-        <Text style={styles.message}>¿Te la bancás?</Text>
-        <Button
-          title="Anotarme"
-            onPress={() => console.log('anotarme')} />
+        {callToAction}
       </View>
     </View>
   }
@@ -112,3 +140,10 @@ const styles = StyleSheet.create({
     marginRight: 10
   }
 })
+
+export default connect(() => ({}), (dispatch) => ({
+  matchJoined: () => {
+    dispatch({ type: 'MATCH_JOINED' })
+    dispatch(NavigationActions.back())
+  }
+}))(MatchDetail)
