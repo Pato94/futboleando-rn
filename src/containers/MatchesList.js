@@ -63,12 +63,13 @@ class MatchesList extends React.Component {
 
   renderMatch = ({ item }) => {
     // const { date, locationName, address } = item
-    const { date, place } = item
+    const { date, place, players } = item
 
     return <MatchCard
       date={date}
       locationName={place}
       address={place}
+      players={players}
       onClick={ () => this.props.openMatch(this.props.navigation, item, this.props.userDetails) } />
   }
 }

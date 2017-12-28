@@ -1,12 +1,31 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
+import moment from 'moment'
 
-export const Header = ({ people = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }) => {
+export const Header = ({ people = [], date }) => {
   const participants = people.length
   const full = participants >= 10
   const color = full ? '#26BA72' : '#E85749'
   const barWidth = `${participants * 10}%`
   const peopleText = full ? 'Partido completo' : `Faltan ${10 - participants} personas`
+  const remainingTime = (() => {
+    const minuteInMillis = 60 * 1000
+    const hourInMillis = 60 * minuteInMillis
+    const matchMoment = moment(date)
+    const now = moment()
+    const diff = matchMoment.diff(now)
+    if (diff <= 0) { // Means the match time is in the past
+      return '- -'
+    } else if (diff <= 24 * hourInMillis) { // So the match is today
+      const leadingZeros = (num) => num < 10 ? '0' + num : num
+      const hours = Math.floor(diff / hourInMillis)
+      const minutes = Math.floor((diff - (hours * hourInMillis)) / minuteInMillis)
+      return `${leadingZeros(hours)}:${leadingZeros(minutes)}`
+    } else {
+      const days = Math.floor(diff / (24 * hourInMillis))
+      return `${days} días`
+    }
+  })()
 
   return (
     <View style={styles.header}>
@@ -26,8 +45,8 @@ export const Header = ({ people = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }) => {
         alignSelf: 'center'
       }} />
       <View style={styles.timer}>
-        <Text style={styles.remaining}>FALTA</Text>
-        <Text style={styles.timeLeft}>01:23</Text>
+        <Text style={styles.remaining}>FALTAN</Text>
+        <Text style={styles.timeLeft}>{remainingTime}</Text>
       </View>
     </View>
   )
@@ -57,7 +76,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   timeLeft: {
-    fontSize: 42,
+    fontSize: 32,
     color: 'white'
   }
 })
