@@ -24,7 +24,7 @@ export default class MatchForm extends React.Component {
       }
 
       axios(configGraphQL).then(response => {
-      	console.log('graphql response:', response.data);
+      	// console.log('graphql response:', response.data);
 
         this.props.navigation.navigate('MainScreen')
       }).catch(err => {

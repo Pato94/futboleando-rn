@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 
-export const Body = () => (
+export const Body = (props) => (
   <View style={styles.body}>
-    <Text>Foo</Text>
+    <Text>{props.locationName}</Text>
   </View>
 )
 
