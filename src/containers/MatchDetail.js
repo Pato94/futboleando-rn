@@ -35,16 +35,20 @@ class MatchDetail extends React.Component {
     const locationText = `${match.place}`
 
     let callToAction
-    if (!match.subscribed) {
+    if (match.players.length === 10) {
+      callToAction = <View>
+        <Text style={styles.message}>¡Ya están los 10!</Text>
+      </View>
+    } else if (match.subscribed) {
+      callToAction = <View>
+        <Text style={styles.message}>¡Ya estás anotado!</Text>
+      </View>
+    } else {
       callToAction = <View>
         <Text style={styles.message}>¿Te la bancás?</Text>
         <Button
           title="Anotarme"
             onPress={() => joinMatch()} />
-      </View>
-    } else {
-      callToAction = <View>
-        <Text style={styles.message}>¡Ya estás anotado!</Text>
       </View>
     }
 
@@ -71,6 +75,9 @@ class MatchDetail extends React.Component {
           source={require("../assets/images/pelota_futbol.png")}
         />
         {callToAction}
+      </View>
+      <View>
+        <Text style={styles.playersTitle}>Anotados:</Text>
       </View>
       <FlatList
         data={players}
@@ -166,6 +173,11 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25
+  },
+  playersTitle: {
+    color: 'white',
+    fontSize: 17,
+    marginBottom: 2
   }
 })
 
