@@ -4,6 +4,7 @@ import { NavigationActions } from 'react-navigation'
 import { navigateAndCleanStack } from '../utils'
 import { connect } from 'react-redux'
 import axios from 'axios'
+import moment from 'moment'
 
 class MatchDetail extends React.Component {
   static navigationOptions = {
@@ -28,8 +29,9 @@ class MatchDetail extends React.Component {
       )
     }
 
-    const matchDate = "12 de enero" // match.date
-    const locationText = `${match.place}, "El Salvador 1430"`
+    const matchDate = moment(match.date).format('MMMM DD')
+    const matchHour = moment(match.date).format('HH:mm')
+    const locationText = `${match.place}`
     // const locationText = `${match.locationName}, ${match.address}`
 
     let callToAction
@@ -57,7 +59,7 @@ class MatchDetail extends React.Component {
           <Image
             style={styles.clockImage}
             source={require("../assets/images/time_futboleando.png")} />
-          <Text style={styles.whiteText}>20:00</Text>
+          <Text style={styles.whiteText}>{matchHour}</Text>
         </View>
         <View style={styles.location}>
           <Text style={styles.locationText}>{locationText}</Text>
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
   location: {
     flexDirection: 'row',
     backgroundColor: '#387935',
-    width: '100%',
+    alignSelf: 'center',
     padding: 10,
     marginTop: 20,
     borderRadius: 3
