@@ -2,9 +2,11 @@ const initialState = {}
 
 const reducer = (state = initialState, action) => {
   if (action.type === 'RECEIVE_USER_DETAILS') {
-    state = { ...state, userDetails: action.payload }
+    return { ...state, userDetails: action.payload }
   } else if (action.type === 'LOAD_MATCHES') {
-    state = { ...state, matches: action.payload}
+    return { ...state, matches: action.payload, dirty: false }
+  } else if (action.type === 'MATCH_CREATED') {
+    return { ...state, dirty: true }
   }
   return state
 }
