@@ -101,5 +101,6 @@ export default connect(() => ({}), (dispatch) => ({
   matchCreated: () => {
     dispatch({ type: 'MATCH_CREATED' })
     dispatch(NavigationActions.back())
+    
   }
 }))(MatchForm)

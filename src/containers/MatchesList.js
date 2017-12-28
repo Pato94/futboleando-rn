@@ -62,7 +62,6 @@ class MatchesList extends React.Component {
   keyExtractor = (item, index) => index
 
   renderMatch = ({ item }) => {
-    // const { date, locationName, address } = item
     const { date, place, players, subscribed } = item
 
     return <MatchCard
