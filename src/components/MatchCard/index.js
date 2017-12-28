@@ -26,7 +26,7 @@ export default class MatchCard extends React.Component {
 const styles = StyleSheet.create({
   card: {
     flexDirection: 'column',
-    width: '91%',
-    marginBottom: 27
+    width: '97%',
+    marginBottom: 15
   }
 })
