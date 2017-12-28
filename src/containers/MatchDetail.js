@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Image, Text, Button, View } from 'react-native'
+import { StyleSheet, Image, Text, Button, View, FlatList } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { navigateAndCleanStack } from '../utils'
 import { connect } from 'react-redux'
@@ -29,22 +29,26 @@ class MatchDetail extends React.Component {
       )
     }
 
+    const players = match.players
     const matchDate = moment(match.date).format('MMMM DD')
     const matchHour = moment(match.date).format('HH:mm')
     const locationText = `${match.place}`
-    // const locationText = `${match.locationName}, ${match.address}`
 
     let callToAction
-    if (!match.subscribed) {
+    if (match.players.length === 10) {
+      callToAction = <View>
+        <Text style={styles.message}>¡Ya están los 10!</Text>
+      </View>
+    } else if (match.subscribed) {
+      callToAction = <View>
+        <Text style={styles.message}>¡Ya estás anotado!</Text>
+      </View>
+    } else {
       callToAction = <View>
         <Text style={styles.message}>¿Te la bancás?</Text>
         <Button
           title="Anotarme"
             onPress={() => joinMatch()} />
-      </View>
-    } else {
-      callToAction = <View>
-        <Text style={styles.message}>¡Ya estás anotado!</Text>
       </View>
     }
 
@@ -72,8 +76,31 @@ class MatchDetail extends React.Component {
         />
         {callToAction}
       </View>
+      <View>
+        <Text style={styles.playersTitle}>Anotados:</Text>
+      </View>
+      <FlatList
+        data={players}
+        renderItem={this.renderPlayer}
+        keyExtractor={this.keyExtractor}
+        horizontal={true}
+        ItemSeparatorComponent={this.space}
+      />
     </View>
   }
+
+  renderPlayer({ item }) {
+    return <Image
+      style={styles.player}
+      source={{uri: item.avatar_url}}
+    />
+  }
+
+  space() {
+    return(<View style={{width: 5}}/>)
+  }
+
+  keyExtractor = (item, index) => index
 }
 const styles = StyleSheet.create({
   container: {
@@ -99,7 +126,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#387935',
     alignSelf: 'center',
     padding: 10,
-    marginTop: 20,
+    marginTop: 30,
     borderRadius: 3
   },
   whiteText: {
@@ -122,7 +149,8 @@ const styles = StyleSheet.create({
   logo: {
     width: 150,
     height: 150,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginTop: 30
   },
   calendarImage: {
     width: 18,
@@ -140,6 +168,16 @@ const styles = StyleSheet.create({
     borderRadius: 1,
     marginLeft: 4,
     marginRight: 10
+  },
+  player: {
+    width: 50,
+    height: 50,
+    borderRadius: 25
+  },
+  playersTitle: {
+    color: 'white',
+    fontSize: 17,
+    marginBottom: 2
   }
 })
 
