@@ -28,7 +28,21 @@ class Login extends React.Component {
       });
 
       if (result.type === 'success') {
-        console.log("Login succeeded")
+        console.log("Google login succeeded")
+
+        console.log(result)
+
+        const api_login = await axios({
+          url: 'http://redo-fulbo.herokuapp.com/player',
+          method: 'post',
+          headers: {
+            Authorization: `Bearer-${result.accessToken}`
+          },
+          data: result
+        })
+
+        console.log(api_login)
+        console.log("Futboleando API login succeeded")
 
         this.props.receiveUserDetails(result)
 
