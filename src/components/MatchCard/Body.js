@@ -38,7 +38,7 @@ export const Body = (props) => (
       alignSelf: 'flex-end',
       marginTop: 10,
       marginBottom: 15,
-      marginRight: 30,
+      marginRight: 20,
       fontSize: 18,
       color: '#4cae46'
     }}>

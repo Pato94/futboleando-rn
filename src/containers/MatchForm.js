@@ -4,6 +4,7 @@ import DatePicker from 'react-native-datepicker'
 import { NavigationActions } from 'react-navigation'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import { getMatches } from './utils'
 
 // Date Picker: https://github.com/xgfe/react-native-datepicker
 class MatchForm extends React.Component {
@@ -19,6 +20,7 @@ class MatchForm extends React.Component {
   }
 
   render() {
+    const missingField = !this.state.date || !this.state.time || !this.state.place
     const createMatch = () => {
       this.setState({ loading: true })
 
@@ -32,13 +34,12 @@ class MatchForm extends React.Component {
       }
 
       axios(configGraphQL).then(response =>
-        this.props.matchCreated()
+        this.props.matchCreated(this.props.accessToken)
       ).catch(err =>
         this.setState({ loading: false, error: err })
       )
     }
 
-    const missingField = !this.state.date || !this.state.time || !this.state.place
     if (this.state.loading) {
       return <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
         <ActivityIndicator size="large" color="#0000ff" />
@@ -80,7 +81,7 @@ class MatchForm extends React.Component {
       />
       <Button
         title='Crear partido!'
-        onPress={createMatch}
+        onPress={() => createMatch()}
         disabled={missingField}
       />
     </View>
@@ -97,10 +98,16 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(() => ({}), (dispatch) => ({
-  matchCreated: () => {
+const mapStateToProps = (state) => ({
+  accessToken: state.matches.userDetails.accessToken
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  matchCreated: (accessToken) => {
     dispatch({ type: 'MATCH_CREATED' })
     dispatch(NavigationActions.back())
-    
+    getMatches(dispatch, accessToken)
   }
-}))(MatchForm)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(MatchForm)

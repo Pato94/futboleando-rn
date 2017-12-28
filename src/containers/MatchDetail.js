@@ -3,6 +3,7 @@ import { StyleSheet, Image, Text, Button, View, FlatList } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { navigateAndCleanStack } from '../utils'
 import { connect } from 'react-redux'
+import { getMatches } from './utils'
 import axios from 'axios'
 import moment from 'moment'
 
@@ -23,7 +24,7 @@ class MatchDetail extends React.Component {
           Authorization: user.accessToken
         }
       }).then(response =>
-        this.props.matchJoined()
+        this.props.matchJoined(this.props.accessToken)
       ).catch(err =>
         this.setState({ loading: false, error: err })
       )
@@ -181,9 +182,12 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(() => ({}), (dispatch) => ({
-  matchJoined: () => {
+export default connect((state) => ({
+  accessToken: state.matches.userDetails.accessToken
+}), (dispatch) => ({
+  matchJoined: (accessToken) => {
     dispatch({ type: 'MATCH_JOINED' })
     dispatch(NavigationActions.back())
+    getMatches(dispatch, accessToken)
   }
 }))(MatchDetail)

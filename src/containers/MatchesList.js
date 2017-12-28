@@ -3,51 +3,23 @@ import { connect } from 'react-redux'
 import { ActivityIndicator, StyleSheet, Text, View, FlatList } from 'react-native'
 import ActionButton from 'react-native-action-button'
 import { MatchCard } from '../components'
+import { getMatches } from './utils'
 import axios from 'axios'
 
 class MatchesList extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {}
-
-    this.getMatches = () => {
-      this.setState({ loading: true })
-      console.log('matches request')
-
-      const configGraphQL = {
-        url: 'http://redo-fulbo.herokuapp.com/matches/upcoming',
-        method: 'get',
-        headers: {
-          Authorization: this.props.userDetails.accessToken
-        }
-      }
-
-      axios(configGraphQL).then(response => {
-        this.props.receiveMatches(response.data.matches)
-        this.setState({ loading: false })
-        console.log('matches success')
-      }).catch(err => {
-        console.log(err)
-        this.setState({ loading: false })
-        console.log('matches error')
-      })
-    }
-  }
-
   static navigationOptions = {
     title: 'Futboleando'
   }
 
+  componentWillMount() {
+    getMatches(this.props.dispatch, this.props.userDetails.accessToken)
+  }
+
   render() {
-    if (this.state.loading) {
+    if (this.props.loading) {
       return <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
-    }
-
-    if (this.props.shouldGetMatches) {
-      this.getMatches()
     }
 
     return <View style={styles.container}>
@@ -85,15 +57,14 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   userDetails: state.matches.userDetails,
   matches: state.matches.matches,
-  shouldGetMatches: !state.matches.matches || state.matches.dirty
+  loading: state.matches.loading
 })
 
 const mapDispatchToProps = (dispatch) => ({
   openMatch: (navigation, match, user) => {
     navigation.navigate('Detail', { match: match, user: user })
   },
-  receiveMatches: (matches) =>
-    dispatch({ type: 'LOAD_MATCHES', payload: matches })
+  dispatch
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MatchesList)
