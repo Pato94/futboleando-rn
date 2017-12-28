@@ -18,7 +18,7 @@ export default class MatchCard extends React.Component {
 
     return <TouchableOpacity style={styles.card} onPress={ onClick }>
       <Header />
-      <Body />
+      <Body locationName={locationName} />
     </TouchableOpacity>
   }
 }

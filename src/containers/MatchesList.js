@@ -4,17 +4,11 @@ import { StyleSheet, Text, View, FlatList, Button } from 'react-native'
 import { MatchCard } from '../components'
 
 class MatchesList extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
   render() {
-    console.log(this.props)
-
-    const match = {
-      date: 'Hoy a las 19:00hs',
-      locationName: 'Palermo Fútbol',
-      address: 'El Salvador 5301'
-    }
-
-    const matches = new Array(3).fill(match)
-
     const createMatch = () => {
       this.props.navigation.navigate('MatchForm')
     }
@@ -24,18 +18,20 @@ class MatchesList extends React.Component {
         title="Crear partido"
         onPress={createMatch}
       />
-      <FlatList data={matches} renderItem={this.renderMatch} keyExtractor={this.keyExtractor} />
+      <FlatList data={this.props.matches} renderItem={this.renderMatch} keyExtractor={this.keyExtractor} />
     </View>
   }
 
   keyExtractor = (item, index) => index
 
   renderMatch = ({ item }) => {
-    const { date, locationName, address } = item
+    // const { date, locationName, address } = item
+    const { date, place } = item
+
     return <MatchCard
       date={date}
-      locationName={locationName}
-      address={address}
+      locationName={place}
+      address={place}
       onClick={ () => this.props.openMatch(this.props.navigation, item) } />
   }
 }
@@ -47,9 +43,14 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = (state) => ({ userDetails: state.matches.userDetails })
+const mapStateToProps = (state) => ({
+  userDetails: state.matches.userDetails,
+  matches: state.matches.matches
+})
 const mapDispatchToProps = (dispatch) => ({
-  openMatch: (navigation, match) => navigation.navigate('Detail')
+  openMatch: (navigation, match) => {
+    navigation.navigate('Detail', match: match)
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MatchesList)

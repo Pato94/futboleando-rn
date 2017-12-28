@@ -25,7 +25,10 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = (state) => ({ userDetails: state.matches.userDetails })
+const mapStateToProps = (state) => ({
+  userDetails: state.matches.userDetails,
+  matches: state.matches.matches
+})
 const mapDispatchToProps = (dispatch) => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(MatchsList)

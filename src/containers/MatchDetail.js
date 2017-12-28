@@ -9,13 +9,19 @@ export default class MatchDetail extends React.Component {
   }
 
   render() {
+    const match = this.props.navigation.state.params
+
+    const matchDate = "12 de enero" // match.date
+    const locationText = `${match.place}, "El Salvador 1430"`
+    // const locationText = `${match.locationName}, ${match.address}`
+
     return <View style={styles.container}>
       <View style={styles.info}>
         <View style={styles.date}>
           <Image
             style={styles.smallImage}
             source={require("../assets/images/calendar.png")} />
-          <Text style={styles.whiteText}>5 de octubre</Text>
+          <Text style={styles.whiteText}>{matchDate}</Text>
           <View style={styles.separator} />
           <Image
             style={styles.smallImage}
@@ -23,9 +29,9 @@ export default class MatchDetail extends React.Component {
           <Text style={styles.whiteText}>20:00</Text>
         </View>
         <View style={styles.location}>
-          <Text style={styles.locationText}>Palermo Futbol, El Salvador 5301</Text>
+          <Text style={styles.locationText}>{locationText}</Text>
         </View>
-      </View>  
+      </View>
       <View style={styles.join}>
         <Image
           style={styles.logo}
