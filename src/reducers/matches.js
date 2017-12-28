@@ -7,7 +7,10 @@ const reducer = (state = initialState, action) => {
     return { ...state, matches: action.payload, dirty: false }
   } else if (action.type === 'MATCH_CREATED') {
     return { ...state, dirty: true }
+  } else if (action.type === 'MATCH_JOINED') {
+    return { ...state, dirty: true }
   }
+
   return state
 }
 

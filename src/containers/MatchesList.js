@@ -16,15 +16,19 @@ class MatchesList extends React.Component {
       console.log('matches request')
 
       const configGraphQL = {
-        url: 'http://redo-fulbo.herokuapp.com/matches',
-        method: 'get'
+        url: 'http://redo-fulbo.herokuapp.com/matches/upcoming',
+        method: 'get',
+        headers: {
+          Authorization: this.props.userDetails.accessToken
+        }
       }
 
       axios(configGraphQL).then(response => {
-        this.props.receiveMatches(response.data)
+        this.props.receiveMatches(response.data.matches)
         this.setState({ loading: false })
         console.log('matches success')
       }).catch(err => {
+        console.log(err)
         this.setState({ loading: false })
         console.log('matches error')
       })
@@ -65,7 +69,7 @@ class MatchesList extends React.Component {
       date={date}
       locationName={place}
       address={place}
-      onClick={ () => this.props.openMatch(this.props.navigation, item) } />
+      onClick={ () => this.props.openMatch(this.props.navigation, item, this.props.userDetails) } />
   }
 }
 
@@ -84,8 +88,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  openMatch: (navigation, match) => {
-    navigation.navigate('Detail', { match: match })
+  openMatch: (navigation, match, user) => {
+    navigation.navigate('Detail', { match: match, user: user })
   },
   receiveMatches: (matches) =>
     dispatch({ type: 'LOAD_MATCHES', payload: matches })
