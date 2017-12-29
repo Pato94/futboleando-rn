@@ -63,7 +63,9 @@ class MatchDetail extends React.Component {
     const locationText = `${match.place}`
 
     let callToAction
-    if (match.players.length === 10) {
+    if (this.props.team1) {
+
+    } else if (match.players.length === 10) {
       callToAction = <View>
         <Text style={styles.message}>¡Ya están los 10!</Text>
         <Button
@@ -88,8 +90,8 @@ class MatchDetail extends React.Component {
     let teams
     if (this.props.team1 && this.props.team2) {
       console.log("vaia vaia")
-      teams = <View>
-        <Text>Juegan</Text>
+      teams = <View style={styles.players}>
+        <Text style={styles.playersTitle}>Juegan</Text>
         <FlatList
           data={this.props.team1.players}
           renderItem={this.renderPlayer}
@@ -97,9 +99,20 @@ class MatchDetail extends React.Component {
           horizontal={true}
           ItemSeparatorComponent={this.space}
         />
-        <Text>Contra</Text>
+        <Text style={styles.playersTitle}>Contra</Text>
         <FlatList
           data={this.props.team2.players}
+          renderItem={this.renderPlayer}
+          keyExtractor={this.keyExtractor}
+          horizontal={true}
+          ItemSeparatorComponent={this.space}
+        />
+      </View>
+    } else {
+      teams = <View style={styles.players}>
+        <Text style={styles.playersTitle}>Anotados:</Text>
+        <FlatList
+          data={players}
           renderItem={this.renderPlayer}
           keyExtractor={this.keyExtractor}
           horizontal={true}
@@ -133,16 +146,6 @@ class MatchDetail extends React.Component {
         {callToAction}
       </View>
       {teams}
-      <View>
-        <Text style={styles.playersTitle}>Anotados:</Text>
-      </View>
-      <FlatList
-        data={players}
-        renderItem={this.renderPlayer}
-        keyExtractor={this.keyExtractor}
-        horizontal={true}
-        ItemSeparatorComponent={this.space}
-      />
     </View>
   }
 
@@ -226,6 +229,11 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     marginRight: 10
   },
+  players: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center'
+  },
   player: {
     width: 50,
     height: 50,
@@ -234,7 +242,8 @@ const styles = StyleSheet.create({
   playersTitle: {
     color: 'white',
     fontSize: 17,
-    marginBottom: 2
+    marginBottom: 2,
+    alignSelf: 'center'
   }
 })
 
