@@ -9,6 +9,8 @@ const reducer = (state = initialState, action) => {
     return { ...state, dirty: true }
   } else if (action.type === 'MATCH_JOINED') {
     return { ...state, dirty: true }
+  } else if (action.type === 'TEAMS_CREATED') {
+    return { ...state, teams: action.payload}
   }
 
   return state

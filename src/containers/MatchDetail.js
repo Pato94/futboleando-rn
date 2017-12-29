@@ -5,6 +5,8 @@ import { navigateAndCleanStack } from '../utils'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import moment from 'moment'
+import { getBestCombinations } from 'equipator'
+
 
 class MatchDetail extends React.Component {
   static navigationOptions = {
@@ -12,6 +14,9 @@ class MatchDetail extends React.Component {
   }
 
   render() {
+    console.log("render#MatchDetail")
+    console.log(this.props)
+
     const match = this.props.navigation.state.params.match
     const user = this.props.navigation.state.params.user
 
@@ -29,6 +34,29 @@ class MatchDetail extends React.Component {
       )
     }
 
+    const createMatchTeams = () => {
+      console.log("createMatchTeams")
+
+      const parsedPlayers = players.map((player) => (
+        {
+          ...player,
+          nick: player.first_name,
+          name: `${player.first_name} ${player.last_name}`,
+          score: 3,
+          gk: false
+        }
+      ))
+
+      const random = Math.floor(Math.random() * (5 + 1));
+
+      parsedPlayers[random].gk = true
+      parsedPlayers[random + 1].gk = true
+
+      const best = getBestCombinations(parsedPlayers)[0]
+
+      this.props.teamsCreated(best.team1, best.team2)
+    }
+
     const players = match.players
     const matchDate = moment(match.date).format('MMMM DD')
     const matchHour = moment(match.date).format('HH:mm')
@@ -38,6 +66,10 @@ class MatchDetail extends React.Component {
     if (match.players.length === 10) {
       callToAction = <View>
         <Text style={styles.message}>¡Ya están los 10!</Text>
+        <Button
+          title="Armar equipos"
+          onPress={() => createMatchTeams()}
+        />
       </View>
     } else if (match.subscribed) {
       callToAction = <View>
@@ -48,7 +80,31 @@ class MatchDetail extends React.Component {
         <Text style={styles.message}>¿Te la bancás?</Text>
         <Button
           title="Anotarme"
-            onPress={() => joinMatch()} />
+          onPress={() => joinMatch()}
+        />
+      </View>
+    }
+
+    let teams
+    if (this.props.team1 && this.props.team2) {
+      console.log("vaia vaia")
+      teams = <View>
+        <Text>Juegan</Text>
+        <FlatList
+          data={this.props.team1.players}
+          renderItem={this.renderPlayer}
+          keyExtractor={this.keyExtractor}
+          horizontal={true}
+          ItemSeparatorComponent={this.space}
+        />
+        <Text>Contra</Text>
+        <FlatList
+          data={this.props.team2.players}
+          renderItem={this.renderPlayer}
+          keyExtractor={this.keyExtractor}
+          horizontal={true}
+          ItemSeparatorComponent={this.space}
+        />
       </View>
     }
 
@@ -76,6 +132,7 @@ class MatchDetail extends React.Component {
         />
         {callToAction}
       </View>
+      {teams}
       <View>
         <Text style={styles.playersTitle}>Anotados:</Text>
       </View>
@@ -181,9 +238,18 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(() => ({}), (dispatch) => ({
+const mapStateToProps = (state) => ({
+  team1: state.matches.teams && state.matches.teams.team1,
+  team2: state.matches.teams && state.matches.teams.team2
+})
+const mapDispatchToProps = (dispatch) => ({
   matchJoined: () => {
     dispatch({ type: 'MATCH_JOINED' })
     dispatch(NavigationActions.back())
+  },
+  teamsCreated: (team1, team2) => {
+    dispatch({ type: 'TEAMS_CREATED', payload: { team1, team2 } })
   }
-}))(MatchDetail)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(MatchDetail)
