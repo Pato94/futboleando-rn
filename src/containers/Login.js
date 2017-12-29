@@ -21,6 +21,8 @@ class Login extends React.Component {
 
         console.log(result)
 
+        result.accessToken = result.user.email
+
         const api_login = await axios({
           url: 'http://redo-fulbo.herokuapp.com/player',
           method: 'post',
