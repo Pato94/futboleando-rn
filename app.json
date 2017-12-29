@@ -3,7 +3,7 @@
     "sdkVersion": "23.0.0",
     "name": "Futboleando",
     "icon": "./src/assets/images/logo.png",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "slug": "futboleando-rn",
     "ios": {
       "bundleIdentifier": "com.restorando.fulbo"
