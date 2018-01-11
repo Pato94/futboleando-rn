@@ -23,7 +23,11 @@ class MatchesList extends React.Component {
     }
 
     return <View style={styles.container}>
-      <FlatList data={this.props.matches} renderItem={this.renderMatch} keyExtractor={this.keyExtractor} />
+      <FlatList
+        style={{ height: '100%' }}
+        data={this.props.matches}
+        renderItem={this.renderMatch}
+        keyExtractor={this.keyExtractor} />
       <ActionButton
         buttonColor="rgb(231,76,60)"
         onPress={ () => this.props.navigation.navigate('MatchForm') }
@@ -48,6 +52,7 @@ class MatchesList extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#eee'
